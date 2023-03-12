@@ -22,4 +22,15 @@
     margin: 0 auto;
     flex-grow: 1;
   }
+
+  .footer {
+    gap: 2rem;
+    color: $text-colot-secondary;
+
+    a,
+    p {
+      min-width: 30px;
+      text-align: center;
+    }
+  }
 }

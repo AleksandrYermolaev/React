@@ -8,6 +8,7 @@
 .list {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   gap: 1rem;
@@ -17,7 +18,7 @@
     height: 100%;
     list-style-type: none;
     text-align: center;
-    height: 100%;
+    height: 90%;
     display: flex;
 
     .link,
