@@ -1,14 +1,22 @@
 import { NavLink } from 'react-router-dom';
+import classes from './Navbar.module.scss';
+
+const setActive = (props: { isActive: boolean; isPending: boolean }): string | undefined =>
+  props.isPending ? 'pending' : props.isActive ? classes.activeLink : classes.link;
 
 const Navbar = () => {
   return (
-    <nav>
-      <ul>
+    <nav className={classes.navigate}>
+      <ul className={classes.list}>
         <li>
-          <NavLink to={'/'}>Home</NavLink>
+          <NavLink className={setActive} to={'/'}>
+            Home
+          </NavLink>
         </li>
         <li>
-          <NavLink to={'/about'}>About Us</NavLink>
+          <NavLink className={setActive} to={'/about'}>
+            About Us
+          </NavLink>
         </li>
       </ul>
     </nav>

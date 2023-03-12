@@ -6,20 +6,20 @@
   width: 100%;
   height: 100vh;
   background-color: $background-color;
-}
 
-.header,
-.footer {
-  width: 100%;
-  height: 50px;
-  background-color: $header-color;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .header,
+  .footer {
+    width: 100%;
+    height: 50px;
+    background-color: $header-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.main {
-  max-width: 1920px;
-  margin: 0 auto;
-  flex-grow: 1;
+  .main {
+    max-width: 1920px;
+    margin: 0 auto;
+    flex-grow: 1;
+  }
 }
