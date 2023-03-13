@@ -2,7 +2,7 @@ import React from 'react';
 
 class NotFound extends React.Component {
   render(): React.ReactNode {
-    return <div>NotFound</div>;
+    return <h1 style={{ fontSize: '2rem', marginTop: '5rem' }}>Requested page not found</h1>;
   }
 }
 

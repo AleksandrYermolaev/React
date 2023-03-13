@@ -2,7 +2,7 @@ import React from 'react';
 
 class About extends React.Component {
   render(): React.ReactNode {
-    return <div>About</div>;
+    return <h1 style={{ fontSize: '2rem', marginTop: '5rem' }}>About us</h1>;
   }
 }
 

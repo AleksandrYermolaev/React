@@ -1,0 +1,63 @@
+@import '../../styles/variables';
+
+.article {
+  max-width: 500px;
+  border: 1px solid $header-color;
+  border-radius: 10px;
+  overflow: hidden;
+
+  .image {
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .desc {
+    background-color: #ffffff;
+    padding: 1rem;
+
+    .title {
+      margin-bottom: 0.8rem;
+      display: inline-block;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+    }
+
+    .divider {
+      margin: 0.5rem 0;
+      width: 100%;
+      border: 1px solid $background-color;
+    }
+  }
+
+  .footer {
+    padding: 5px 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    .info {
+      width: 20%;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      img {
+        height: 100%;
+        cursor: pointer;
+      }
+    }
+
+    .date {
+      flex-grow: 1;
+      text-align: right;
+    }
+  }
+}
