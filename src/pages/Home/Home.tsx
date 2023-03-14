@@ -5,19 +5,26 @@ import Button from '../../components/Button/Button';
 import HomeGrid from '../../components/HomeGrid/HomeGrid';
 import classes from './Home.module.scss';
 import data from '../../assets/data/mockData.json';
+import getInitialState from '../../helpers/getHomeInitialState';
+
+type HomeProps = object;
 
 type HomeState = {
   searchValue: string;
 };
 
-class Home extends React.Component<object, HomeState> {
+class Home extends React.Component<HomeProps, HomeState> {
   state = {
-    searchValue: '',
+    searchValue: getInitialState(),
   };
 
   handleInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({ searchValue: event.target.value });
   };
+
+  componentWillUnmount(): void {
+    if (this.state.searchValue) localStorage.setItem('search', this.state.searchValue);
+  }
 
   render(): React.ReactNode {
     return (
