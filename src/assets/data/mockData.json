@@ -1,0 +1,74 @@
+[
+  {
+    "image": "https://source.unsplash.com/user/c_v_r/500x300",
+    "title": "My story",
+    "subtitle": "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia",
+    "categories": "tourism, fishing",
+    "likes": 82,
+    "views": 102,
+    "date": 1678878711000
+  },
+  {
+    "image": "https://source.unsplash.com/user/c_v_r/501x300",
+    "title": "News",
+    "subtitle": "The Big Oxmox advised her not to do so, because there were thousands of bad Commas",
+    "categories": "news, policy, danger",
+    "likes": 12,
+    "views": 56,
+    "date": 1676200311000
+  },
+  {
+    "image": "https://source.unsplash.com/user/c_v_r/500x301",
+    "title": "Get from above",
+    "subtitle": "She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village",
+    "categories": "some category1, some category2",
+    "likes": 245,
+    "views": 1546,
+    "date": 1677628800000
+  },
+  {
+    "image": "https://source.unsplash.com/user/c_v_r/501x301",
+    "title": "Welcome message",
+    "subtitle": "Separated they live in Bookmarksgrove right at the coast of the Semantics",
+    "categories": "joy, happiness",
+    "likes": 0,
+    "views": 12,
+    "date": 1677628800000
+  },
+  {
+    "image": "https://source.unsplash.com/user/c_v_r/502x300",
+    "title": "Cats and dogs",
+    "subtitle": "A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart",
+    "categories": "animals, housing, cats, dogs",
+    "likes": 687,
+    "views": 4563,
+    "date": 1678579200000
+  },
+  {
+    "image": "https://source.unsplash.com/user/c_v_r/502x301",
+    "title": "For newcomers",
+    "subtitle": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin",
+    "categories": "info, important",
+    "likes": 25,
+    "views": 1574,
+    "date": 1678752000000
+  },
+  {
+    "image": "https://source.unsplash.com/user/c_v_r/501x302",
+    "title": "Privacy policy",
+    "subtitle": "I should be incapable of drawing a single stroke at the present moment",
+    "categories": "policy, info",
+    "likes": 941,
+    "views": 4478,
+    "date": 1678924800000
+  },
+  {
+    "image": "https://source.unsplash.com/user/c_v_r/502x302",
+    "title": "Home garden",
+    "subtitle": "A collection of textile samples lay spread out on the table - Samsa was a travelling salesman",
+    "categories": "housing, plants",
+    "likes": 65,
+    "views": 271,
+    "date": 1679097600000
+  }
+]

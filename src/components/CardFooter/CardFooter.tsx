@@ -7,6 +7,7 @@ import watch from '../../assets/icons/eye.png';
 type CardFooterProps = {
   likes: number;
   views: number;
+  date: Date;
 };
 
 type CardFooterState = object;
@@ -17,7 +18,7 @@ class CardFooter extends Component<CardFooterProps, CardFooterState> {
   }
 
   render() {
-    const { likes, views } = this.props;
+    const { likes, views, date } = this.props;
     return (
       <p className={classes.footer}>
         <span className={classes.info}>
@@ -28,7 +29,7 @@ class CardFooter extends Component<CardFooterProps, CardFooterState> {
           <img src={watch} alt="like" />
           {views}
         </span>
-        <span className={classes.date}>15.03.2023</span>
+        <span className={classes.date}>{date.toLocaleDateString()}</span>
       </p>
     );
   }

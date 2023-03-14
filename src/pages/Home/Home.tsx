@@ -2,8 +2,9 @@ import React from 'react';
 
 import Search from '../../components/inputs/Search/Search';
 import Button from '../../components/Button/Button';
-import HomeCard from '../../components/HomeCard/HomeCard';
+import HomeGrid from '../../components/HomeGrid/HomeGrid';
 import classes from './Home.module.scss';
+import data from '../../assets/data/mockData.json';
 
 type HomeState = {
   searchValue: string;
@@ -29,7 +30,7 @@ class Home extends React.Component<object, HomeState> {
           />
           <Button>Search</Button>
         </form>
-        <HomeCard />
+        <HomeGrid data={data} />
       </div>
     );
   }

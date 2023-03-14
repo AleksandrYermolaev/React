@@ -4,10 +4,13 @@ import classes from './HomeCard.module.scss';
 import Image from '../Image/Image';
 import CardDescription from '../CardDescription/CardDescription';
 import CardFooter from '../CardFooter/CardFooter';
+import { CardType } from '../../types/types';
+
+type HomeCardProps = {
+  cardData: CardType;
+};
 
 type HomeCardState = object;
-
-type HomeCardProps = object;
 
 class HomeCard extends React.Component<HomeCardProps, HomeCardState> {
   constructor(props: HomeCardProps) {
@@ -15,15 +18,14 @@ class HomeCard extends React.Component<HomeCardProps, HomeCardState> {
   }
 
   render(): React.ReactNode {
+    const {
+      cardData: { image, title, subtitle, categories, likes, views, date },
+    } = this.props;
     return (
       <article className={classes.article}>
-        <Image src="" />
-        <CardDescription
-          title="Card title"
-          subtitle="Lodsfasfsd asdfg sdfg fg sfg sfg sfgs fgs"
-          category="sdf s "
-        />
-        <CardFooter likes={157} views={2086} />
+        <Image src={image} />
+        <CardDescription title={title} subtitle={subtitle} category={categories} />
+        <CardFooter likes={likes} views={views} date={new Date(date)} />
       </article>
     );
   }
