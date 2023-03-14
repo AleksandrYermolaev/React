@@ -26,7 +26,7 @@ class CardFooter extends Component<CardFooterProps, CardFooterState> {
           {likes}
         </span>
         <span className={classes.info}>
-          <img src={watch} alt="like" />
+          <img src={watch} alt="eye" />
           {views}
         </span>
         <span className={classes.date}>{date.toLocaleDateString()}</span>
