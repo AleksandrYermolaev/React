@@ -1,0 +1,37 @@
+@import '../../styles/variables';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  background-color: $background-color;
+
+  .header,
+  .footer {
+    width: 100%;
+    height: 50px;
+    flex-shrink: 0;
+    background-color: $header-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main {
+    max-width: 1920px;
+    margin: 0 auto;
+    flex-grow: 1;
+  }
+
+  .footer {
+    gap: 2rem;
+    color: $text-colot-secondary;
+
+    a,
+    p {
+      min-width: 30px;
+      text-align: center;
+    }
+  }
+}
