@@ -17,6 +17,11 @@ class Navbar extends React.Component {
             </NavLink>
           </li>
           <li>
+            <NavLink className={this.setActive} to={'/forms'}>
+              Forms
+            </NavLink>
+          </li>
+          <li>
             <NavLink className={this.setActive} to={'/about'}>
               About Us
             </NavLink>

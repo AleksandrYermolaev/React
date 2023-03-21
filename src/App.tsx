@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Layout from './components/Layout/Layout';
 import './styles/_global.scss';
+import Forms from './pages/Forms/Forms';
 
 class App extends React.Component {
   render(): React.ReactNode {
@@ -15,6 +16,7 @@ class App extends React.Component {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
+            <Route path="forms" element={<Forms />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
