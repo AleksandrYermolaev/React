@@ -1,0 +1,21 @@
+@import '../../../styles/variables';
+
+.label {
+  display: flex;
+  justify-content: space-between;
+
+  .input {
+    margin: 0 0 0 5px;
+    padding: 2px 5px;
+    background-color: transparent;
+    border: 2px solid $border-color;
+    outline: none;
+    border-radius: 5px;
+    flex-grow: 1;
+    cursor: pointer;
+
+    &:focus {
+      box-shadow: 0 0 2px $border-color;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+@import '../../../styles/variables';
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .input {
+    margin: 0 0 0 5px;
+    width: 100%;
+  }
+}
