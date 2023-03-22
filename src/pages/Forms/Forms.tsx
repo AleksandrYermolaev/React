@@ -7,7 +7,7 @@ import Text from '../../components/inputs/Text/Text';
 import Date from '../../components/inputs/Date/Date';
 import Select from '../../components/inputs/Select/Select';
 import Check from '../../components/inputs/Check/Check';
-import File from '../../components/inputs/File/File';
+import File from 'components/inputs/File/File';
 
 class Forms extends React.Component {
   render(): React.ReactNode {
