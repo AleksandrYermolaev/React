@@ -7,27 +7,42 @@ type SelectProps = {
   label: string;
   name: string;
   options: Array<string>;
+  getValue: (field: string, value: string | undefined) => void;
+  errMessage: string;
 };
 
 export class Select extends React.Component<SelectProps, SelectState> {
-  dateInput: React.RefObject<HTMLInputElement>;
+  selectInput: React.RefObject<HTMLSelectElement>;
 
   constructor(props: SelectProps) {
     super(props);
-    this.dateInput = React.createRef<HTMLInputElement>();
+    this.selectInput = React.createRef<HTMLSelectElement>();
   }
+
+  handleSelect = () => {
+    this.props.getValue(this.props.name, this.selectInput.current?.value);
+  };
 
   render() {
     return (
       <label className={classes.label}>
         {this.props.label}:
-        <select name={this.props.name} className={classes.input}>
-          {this.props.options.map((option, id) => (
-            <option key={id} value={option.toLowerCase()}>
-              {option}
-            </option>
-          ))}
-        </select>
+        <div className={classes.container}>
+          <select
+            name={this.props.name}
+            className={classes.input}
+            ref={this.selectInput}
+            onChange={this.handleSelect}
+            defaultValue={this.props.options[0].toLowerCase()}
+          >
+            {this.props.options.map((option, id) => (
+              <option key={id} value={option.toLowerCase()} disabled={id === 0}>
+                {option}
+              </option>
+            ))}
+          </select>
+          <p className={classes.warning}>{this.props.errMessage}</p>
+        </div>
       </label>
     );
   }

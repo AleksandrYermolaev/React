@@ -1,13 +1,12 @@
 import React from 'react';
 import classes from './Date.module.scss';
 
-type DateState = {
-  validityMessage: string;
-};
+type DateState = object;
 
 type DateProps = {
   label: string;
-  validator: (value: number | undefined) => string;
+  errMessage: string;
+  getValue: (field: string, value: number | undefined) => void;
 };
 
 export class Date extends React.Component<DateProps, DateState> {
@@ -15,15 +14,11 @@ export class Date extends React.Component<DateProps, DateState> {
 
   constructor(props: DateProps) {
     super(props);
-    this.state = {
-      validityMessage: '',
-    };
     this.dateInput = React.createRef<HTMLInputElement>();
   }
 
-  handleWarning = () => {
-    const newMessage = this.props.validator(this.dateInput.current?.valueAsNumber);
-    this.setState({ validityMessage: newMessage });
+  handleDateInput = () => {
+    this.props.getValue(this.props.label.toLowerCase(), this.dateInput.current?.valueAsNumber);
   };
 
   render() {
@@ -37,10 +32,10 @@ export class Date extends React.Component<DateProps, DateState> {
               name={this.props.label.toLowerCase()}
               className={classes.input}
               ref={this.dateInput}
-              onChange={this.handleWarning}
-              onBlur={this.handleWarning}
+              onChange={this.handleDateInput}
+              onBlur={this.handleDateInput}
             />
-            <p className={classes.warning}>{this.state.validityMessage}</p>
+            <p className={classes.warning}>{this.props.errMessage}</p>
           </div>
         </label>
       </>

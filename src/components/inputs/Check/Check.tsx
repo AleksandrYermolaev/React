@@ -1,15 +1,14 @@
 import React from 'react';
 import classes from './Check.module.scss';
 
-type CheckState = {
-  validityMessage: string;
-};
+type CheckState = object;
 
 type CheckProps = {
   type: 'radio' | 'checkbox';
   label: string;
   options: Array<string>;
-  validator: (value: boolean | undefined) => string;
+  errMessage: string;
+  getValue: (field: string, value: string | undefined) => void;
 };
 
 export class Check extends React.Component<CheckProps, CheckState> {
@@ -17,16 +16,16 @@ export class Check extends React.Component<CheckProps, CheckState> {
 
   constructor(props: CheckProps) {
     super(props);
-    this.state = {
-      validityMessage: '',
-    };
     this.checkInput = this.props.options.map(() => React.createRef<HTMLInputElement>());
   }
 
-  handleWarning = () => {
-    const newMessages = this.checkInput.map((ref) => this.props.validator(ref.current?.checked));
-    const newMessage = newMessages.includes('') ? '' : 'field is required';
-    this.setState({ validityMessage: newMessage });
+  handleCheckInput = () => {
+    const checkedRef = this.checkInput.filter((ref) => ref.current?.checked);
+    const refValue =
+      checkedRef.length === 1
+        ? checkedRef[0].current?.value
+        : checkedRef.map((ref) => ref.current?.value).join(', ');
+    this.props.getValue(this.props.label.toLowerCase(), refValue);
   };
 
   render() {
@@ -42,7 +41,8 @@ export class Check extends React.Component<CheckProps, CheckState> {
                 value={option.toLowerCase()}
                 id={option.toLowerCase()}
                 className={classes.input}
-                onBlur={this.handleWarning}
+                onBlur={this.handleCheckInput}
+                onChange={this.handleCheckInput}
                 ref={this.checkInput[id]}
               />
               <label htmlFor={option.toLowerCase()} className={classes.label}>
@@ -50,7 +50,7 @@ export class Check extends React.Component<CheckProps, CheckState> {
               </label>
             </span>
           ))}
-          <p className={classes.warning}>{this.state.validityMessage}</p>
+          <p className={classes.warning}>{this.props.errMessage}</p>
         </div>
       </div>
     );

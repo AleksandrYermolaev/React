@@ -1,13 +1,12 @@
 import React from 'react';
 import classes from './Text.module.scss';
 
-type TextState = {
-  validityMessage: string;
-};
+type TextState = object;
 
 type TextProps = {
   label: string;
-  validator: (value: string | undefined) => string;
+  errMessage: string;
+  getValue: (field: string, value: string | undefined) => void;
 };
 
 export class Text extends React.Component<TextProps, TextState> {
@@ -15,15 +14,11 @@ export class Text extends React.Component<TextProps, TextState> {
 
   constructor(props: TextProps) {
     super(props);
-    this.state = {
-      validityMessage: '',
-    };
     this.textInput = React.createRef<HTMLInputElement>();
   }
 
-  handleWarning = () => {
-    const newMessage = this.props.validator(this.textInput.current?.value);
-    this.setState({ validityMessage: newMessage });
+  handleTextInput = () => {
+    this.props.getValue(this.props.label.toLowerCase(), this.textInput.current?.value);
   };
 
   render() {
@@ -37,10 +32,10 @@ export class Text extends React.Component<TextProps, TextState> {
               name={this.props.label.toLowerCase()}
               className={classes.input}
               ref={this.textInput}
-              onChange={this.handleWarning}
-              onBlur={this.handleWarning}
+              onChange={this.handleTextInput}
+              onBlur={this.handleTextInput}
             />
-            <p className={classes.warning}>{this.state.validityMessage}</p>
+            <p className={classes.warning}>{this.props.errMessage}</p>
           </div>
         </label>
       </>
