@@ -8,8 +8,12 @@ import File from 'components/inputs/File/File';
 import Button from 'components/Button/Button';
 import validateInputs from 'helpers/validateInputs';
 import setErrorMessage from 'helpers/setErrorMessage';
+import { UserType } from 'types/types';
 
-type FormProps = object;
+type FormProps = {
+  setData: (user: UserType) => void;
+};
+
 type FormState = {
   formFields: {
     [x: string]: string | number;
@@ -73,6 +77,15 @@ class Form extends React.Component<FormProps, FormState> {
     if (isFormValid.includes(false)) {
       return;
     }
+    this.props.setData({
+      name: this.state.formFields.name as string,
+      surname: this.state.formFields.surname as string,
+      birthday: this.state.formFields.birthday as number,
+      family: this.state.formFields.family as string,
+      gender: this.state.formFields.gender as string,
+      avatar: this.state.formFields.avatar as string,
+      notifications: this.state.formFields.notifications as string,
+    });
   };
 
   setFormField = (field: string, value: string | number | undefined): void => {

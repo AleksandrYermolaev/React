@@ -7,3 +7,13 @@ export type CardType = {
   views: number;
   date: number;
 };
+
+export type UserType = {
+  name: string;
+  surname: string;
+  birthday: number;
+  family: string;
+  gender: string;
+  avatar: string;
+  notifications: string;
+};
