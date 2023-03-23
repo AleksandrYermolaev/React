@@ -29,21 +29,23 @@ type FormState = {
   };
 };
 
+const initialState = {
+  name: '',
+  surname: '',
+  birthday: 0,
+  family: '',
+  gender: '',
+  avatar: '',
+  notifications: '',
+};
+
 class Form extends React.Component<FormProps, FormState> {
   checkInput: React.RefObject<HTMLInputElement>;
 
   constructor(props: FormProps) {
     super(props);
     this.state = {
-      formFields: {
-        name: '',
-        surname: '',
-        birthday: 0,
-        family: '',
-        gender: '',
-        avatar: '',
-        notifications: '',
-      },
+      formFields: initialState,
       errMessages: {
         name: '',
         surname: '',
