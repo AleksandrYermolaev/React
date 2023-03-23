@@ -77,14 +77,16 @@ class Form extends React.Component<FormProps, FormState> {
     if (isFormValid.includes(false)) {
       return;
     }
+    const { name, surname, birthday, family, gender, avatar, notifications } =
+      this.state.formFields;
     this.props.setData({
-      name: this.state.formFields.name as string,
-      surname: this.state.formFields.surname as string,
-      birthday: this.state.formFields.birthday as number,
-      family: this.state.formFields.family as string,
-      gender: this.state.formFields.gender as string,
-      avatar: this.state.formFields.avatar as string,
-      notifications: this.state.formFields.notifications as string,
+      name: name as string,
+      surname: surname as string,
+      birthday: birthday as number,
+      family: family as string,
+      gender: gender as string,
+      avatar: avatar as string,
+      notifications: notifications as string,
     });
   };
 

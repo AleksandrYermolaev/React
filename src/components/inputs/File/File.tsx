@@ -23,8 +23,6 @@ export class File extends React.Component<FileProps, FileState> {
     if (event.target.files) {
       const [file] = event.target.files;
       const url = file ? URL.createObjectURL(file) : '';
-      console.log(file);
-
       this.props.getValue(this.props.name, url);
     }
   };

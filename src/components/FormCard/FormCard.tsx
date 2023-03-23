@@ -13,9 +13,10 @@ export class FormCard extends Component<FormCardProps, FormCardState> {
     super(props);
   }
 
-  // getYearsOld = (date: number): string => {
-  //   const year = new Date(Date.now() - date).getFullYear;
-  // };
+  getYearsOld = (date: number): string => {
+    const year = new Date(Date.now()).getFullYear() - new Date(date).getFullYear();
+    return `${year} year(s) old`;
+  };
 
   render() {
     const { name, surname, birthday, family, gender, avatar, notifications } = this.props.user;
@@ -27,7 +28,7 @@ export class FormCard extends Component<FormCardProps, FormCardState> {
           </div>
           <div className={classes.info_container}>
             <h4 className={classes.name}>{`${name} ${surname}`}</h4>
-            <p>{birthday}</p>
+            <p>{this.getYearsOld(birthday)}</p>
           </div>
         </div>
         <div className={classes.bottom}>
