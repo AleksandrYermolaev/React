@@ -3,7 +3,7 @@ import classes from './Check.module.scss';
 
 type CheckState = object;
 
-type CheckProps = {
+export type CheckProps = {
   type: 'radio' | 'checkbox';
   label: string;
   options: Array<string>;

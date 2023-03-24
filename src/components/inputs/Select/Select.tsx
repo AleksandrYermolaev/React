@@ -36,7 +36,12 @@ export class Select extends React.Component<SelectProps, SelectState> {
             defaultValue={this.props.options[0].toLowerCase()}
           >
             {this.props.options.map((option, id) => (
-              <option key={id} value={option.toLowerCase()} disabled={id === 0}>
+              <option
+                key={id}
+                value={option.toLowerCase()}
+                disabled={id === 0}
+                data-testid="option"
+              >
                 {option}
               </option>
             ))}
