@@ -1,0 +1,32 @@
+@import '../../../styles/variables';
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  .container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+    position: relative;
+
+    .input {
+      margin: 0 5px 0 0;
+    }
+
+    .label,
+    .input {
+      cursor: pointer;
+    }
+
+    .warning {
+      position: absolute;
+      margin: 2px 0 0 5px;
+      font-size: 0.8rem;
+      color: $warning-color;
+      top: 1rem;
+    }
+  }
+}

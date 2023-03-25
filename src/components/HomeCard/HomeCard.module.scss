@@ -1,0 +1,10 @@
+@import '../../styles/variables';
+
+.article {
+  max-width: 400px;
+  border: 1px solid $header-color;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
