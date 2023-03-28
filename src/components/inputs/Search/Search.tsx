@@ -1,8 +1,4 @@
-import React from 'react';
-
 import classes from './Search.module.scss';
-
-type SearchState = object;
 
 type SearchProps = {
   value: string;
@@ -10,23 +6,16 @@ type SearchProps = {
   placeholder?: string;
 };
 
-class Search extends React.Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-  }
-  render() {
-    return (
-      <label className={classes.label}>
-        <input
-          className={classes.input}
-          type="text"
-          value={this.props.value}
-          placeholder={this.props.placeholder}
-          onChange={this.props.setValue}
-        />
-      </label>
-    );
-  }
-}
+const Search: React.FC<SearchProps> = ({ value, setValue, placeholder }) => (
+  <label className={classes.label}>
+    <input
+      className={classes.input}
+      type="text"
+      value={value}
+      placeholder={placeholder}
+      onChange={setValue}
+    />
+  </label>
+);
 
 export default Search;
