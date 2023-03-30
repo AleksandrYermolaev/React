@@ -17,3 +17,13 @@ export type UserType = {
   avatar: string;
   notifications: string;
 };
+
+export type InputsType = {
+  name: string;
+  surname: string;
+  birthday: string;
+  family: string;
+  gender: string;
+  avatar: FileList;
+  notifications: Array<string>;
+};

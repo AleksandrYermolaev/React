@@ -20,7 +20,7 @@ describe('HomeGrid', () => {
       categories: 'category1, category2',
       likes: 5,
       views: 10,
-      date: 1,
+      date: 2,
     },
     {
       image: 'img-url',
@@ -29,7 +29,7 @@ describe('HomeGrid', () => {
       categories: 'category1, category2',
       likes: 5,
       views: 10,
-      date: 1,
+      date: 3,
     },
   ];
 

@@ -1,14 +1,15 @@
 import { render } from '@testing-library/react';
+import { InputsType } from 'types/types';
 import { describe, expect, vi } from 'vitest';
 import Select from './Select';
 
 describe('Select', () => {
   const stubOptions = ['1', '2', '3'];
   const selectProps = {
-    label: 'file',
-    name: 'file',
+    label: 'Family',
+    name: 'family' as keyof InputsType,
     options: stubOptions,
-    getValue: vi.fn(),
+    register: vi.fn(),
     errMessage: 'error',
   };
 
