@@ -17,6 +17,7 @@ const Form: React.FC<FormProps> = ({ setData }) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<InputsType>();
 
   const selectOptions = ['Choose it', 'Single', 'Married', 'Divorced', 'Complicated'];
@@ -44,6 +45,7 @@ const Form: React.FC<FormProps> = ({ setData }) => {
       notifications: data.notifications.join(', '),
     };
     setData(user);
+    reset();
   };
 
   return (
