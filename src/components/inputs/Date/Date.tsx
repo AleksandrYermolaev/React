@@ -1,46 +1,35 @@
-import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { InputsType } from 'types/types';
 import classes from './Date.module.scss';
-
-type DateState = object;
 
 type DateProps = {
   label: string;
+  register: UseFormRegister<InputsType>;
   errMessage: string;
-  getValue: (field: string, value: number | undefined) => void;
 };
 
-export class Date extends React.Component<DateProps, DateState> {
-  dateInput: React.RefObject<HTMLInputElement>;
+const DateInput: React.FC<DateProps> = ({ label, register, errMessage }) => {
+  return (
+    <>
+      <label className={classes.label}>
+        {label}:
+        <div className={classes.container}>
+          <input
+            type="date"
+            {...register('birthday', {
+              required: 'field is required',
+              validate: {
+                moreThan: (v) =>
+                  new Date(v).getTime() < 1104537600000 || 'only 18 y.o. users allowed',
+              },
+            })}
+            className={classes.input}
+          />
+          <p className={classes.warning}>{errMessage}</p>
+        </div>
+      </label>
+    </>
+  );
+};
 
-  constructor(props: DateProps) {
-    super(props);
-    this.dateInput = React.createRef<HTMLInputElement>();
-  }
-
-  handleDateInput = () => {
-    this.props.getValue(this.props.label.toLowerCase(), this.dateInput.current?.valueAsNumber);
-  };
-
-  render() {
-    return (
-      <>
-        <label className={classes.label}>
-          {this.props.label}:
-          <div className={classes.container}>
-            <input
-              type="date"
-              name={this.props.label.toLowerCase()}
-              className={classes.input}
-              ref={this.dateInput}
-              onChange={this.handleDateInput}
-              onBlur={this.handleDateInput}
-            />
-            <p className={classes.warning}>{this.props.errMessage}</p>
-          </div>
-        </label>
-      </>
-    );
-  }
-}
-
-export default Date;
+export default DateInput;

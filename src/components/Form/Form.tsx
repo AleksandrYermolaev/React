@@ -1,165 +1,98 @@
-import React, { FormEvent } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import classes from './Form.module.scss';
 import Text from 'components/inputs/Text/Text';
-import Date from 'components/inputs/Date/Date';
+import DateInput from 'components/inputs/Date/Date';
 import Select from 'components/inputs/Select/Select';
 import Check from 'components/inputs/Check/Check';
 import File from 'components/inputs/File/File';
 import Button from 'components/Button/Button';
-import validateInputs from 'helpers/validateInputs';
-import setErrorMessage from 'helpers/setErrorMessage';
-import { UserType } from 'types/types';
+import { InputsType, UserType } from 'types/types';
 
 type FormProps = {
   setData: (user: UserType) => void;
 };
 
-type FormState = {
-  formFields: {
-    [x: string]: string | number;
+const Form: React.FC<FormProps> = ({ setData }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<InputsType>();
+
+  const selectOptions = ['Choose it', 'Single', 'Married', 'Divorced', 'Complicated'];
+  const radioOptions = ['Male', 'Female', 'Other'];
+  const checkBoxOptions = ['Push message', 'Email'];
+
+  const handleImage = (image: FileList): string => {
+    const [file] = image;
+    const url = file ? URL.createObjectURL(file) : '';
+    return url;
   };
-  errMessages: {
-    name: string;
-    surname: string;
-    birthday: string;
-    family: string;
-    gender: string;
-    avatar: string;
-    notifications: string;
+
+  const handleDate = (date: string) => {
+    return new Date(date).getTime();
   };
-};
 
-const initialState = {
-  name: '',
-  surname: '',
-  birthday: 0,
-  family: '',
-  gender: '',
-  avatar: '',
-  notifications: '',
-};
-
-class Form extends React.Component<FormProps, FormState> {
-  checkInput: React.RefObject<HTMLInputElement>;
-
-  constructor(props: FormProps) {
-    super(props);
-    this.state = {
-      formFields: initialState,
-      errMessages: {
-        name: '',
-        surname: '',
-        birthday: '',
-        family: '',
-        gender: '',
-        avatar: '',
-        notifications: '',
-      },
+  const onSubmit: SubmitHandler<InputsType> = (data) => {
+    const user: UserType = {
+      name: data.name,
+      surname: data.surname,
+      birthday: handleDate(data.birthday),
+      family: data.family,
+      gender: data.gender,
+      avatar: handleImage(data.avatar),
+      notifications: data.notifications.join(', '),
     };
-    this.checkInput = React.createRef<HTMLInputElement>();
-  }
-
-  handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const isFormValid: Array<boolean> = [];
-    for (const key in this.state.formFields) {
-      const isFieldValid = validateInputs(key, this.state.formFields[key]);
-      if (!isFieldValid) {
-        const message = setErrorMessage(key, this.state.formFields[key]);
-        this.setState((state) => {
-          return { errMessages: { ...state.errMessages, [key]: message } };
-        });
-      } else {
-        this.setState((state) => {
-          return { errMessages: { ...state.errMessages, [key]: '' } };
-        });
-      }
-      isFormValid.push(isFieldValid);
-    }
-    if (isFormValid.includes(false)) {
-      return;
-    }
-    const { name, surname, birthday, family, gender, avatar, notifications } =
-      this.state.formFields;
-    this.props.setData({
-      name: name as string,
-      surname: surname as string,
-      birthday: birthday as number,
-      family: family as string,
-      gender: gender as string,
-      avatar: avatar as string,
-      notifications: notifications as string,
-    });
+    setData(user);
+    reset();
   };
 
-  setFormField = (field: string, value: string | number | undefined): void => {
-    if (value) {
-      this.setState({ formFields: { ...this.state.formFields, [field]: value } });
-    } else {
-      this.setState({ formFields: { ...this.state.formFields, [field]: '' } });
-    }
-  };
-
-  render(): React.ReactNode {
-    const { form, legend } = classes;
-    const selectOptions = ['Choose it', 'Single', 'Married', 'Divorced', 'Complicated'];
-    const radioOptions = ['Male', 'Female', 'Other'];
-    const checkBoxOptions = ['Push message', 'Email'];
-
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <fieldset className={form}>
-          <legend className={legend}>Please, enter your personal data</legend>
-          <Text
-            label="Name"
-            getValue={this.setFormField}
-            errMessage={this.state.errMessages.name}
-          />
-          <Text
-            label="Surname"
-            getValue={this.setFormField}
-            errMessage={this.state.errMessages.surname}
-          />
-          <Date
-            label="Birthday"
-            errMessage={this.state.errMessages.birthday}
-            getValue={this.setFormField}
-          />
-          <Select
-            label="Family status"
-            name="family"
-            options={selectOptions}
-            getValue={this.setFormField}
-            errMessage={this.state.errMessages.family}
-          />
-          <Check
-            label="Gender"
-            options={radioOptions}
-            errMessage={this.state.errMessages.gender}
-            type="radio"
-            getValue={this.setFormField}
-          />
-          <File
-            label="Photo"
-            name="avatar"
-            accept="image/*"
-            getValue={this.setFormField}
-            errMessage={this.state.errMessages.avatar}
-          />
-          <Check
-            label="Notifications"
-            options={checkBoxOptions}
-            errMessage={this.state.errMessages.notifications}
-            type="checkbox"
-            getValue={this.setFormField}
-          />
-          <div className={classes.submit}>
-            <Button type="submit">Submit</Button>
-          </div>
-        </fieldset>
-      </form>
-    );
-  }
-}
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <fieldset className={classes.form}>
+        <legend className={classes.legend}>Please, enter your personal data</legend>
+        <Text label="Name" register={register} errMessage={errors.name?.message || ''} />
+        <Text label="Surname" register={register} errMessage={errors.surname?.message || ''} />
+        <DateInput
+          label="Birthday"
+          register={register}
+          errMessage={errors.birthday?.message || ''}
+        />
+        <Select
+          label="Family status"
+          name="family"
+          options={selectOptions}
+          register={register}
+          errMessage={errors.family?.message || ''}
+        />
+        <Check
+          label="Gender"
+          register={register}
+          options={radioOptions}
+          errMessage={errors.gender?.message || ''}
+          type="radio"
+        />
+        <File
+          register={register}
+          label="Photo"
+          name="avatar"
+          accept="image/*"
+          errMessage={errors.avatar?.message || ''}
+        />
+        <Check
+          label="Notifications"
+          register={register}
+          options={checkBoxOptions}
+          errMessage={errors.notifications?.message || ''}
+          type="checkbox"
+        />
+        <div className={classes.submit}>
+          <Button type="submit">Submit</Button>
+        </div>
+      </fieldset>
+    </form>
+  );
+};
 
 export default Form;

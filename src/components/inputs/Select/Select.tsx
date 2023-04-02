@@ -1,56 +1,39 @@
-import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { InputsType } from 'types/types';
 import classes from './Select.module.scss';
-
-type SelectState = object;
 
 type SelectProps = {
   label: string;
-  name: string;
+  name: keyof InputsType;
   options: Array<string>;
-  getValue: (field: string, value: string | undefined) => void;
+  register: UseFormRegister<InputsType>;
   errMessage: string;
 };
 
-export class Select extends React.Component<SelectProps, SelectState> {
-  selectInput: React.RefObject<HTMLSelectElement>;
-
-  constructor(props: SelectProps) {
-    super(props);
-    this.selectInput = React.createRef<HTMLSelectElement>();
-  }
-
-  handleSelect = () => {
-    this.props.getValue(this.props.name, this.selectInput.current?.value);
-  };
-
-  render() {
-    return (
-      <label className={classes.label}>
-        {this.props.label}:
-        <div className={classes.container}>
-          <select
-            name={this.props.name}
-            className={classes.input}
-            ref={this.selectInput}
-            onChange={this.handleSelect}
-            defaultValue={this.props.options[0].toLowerCase()}
-          >
-            {this.props.options.map((option, id) => (
-              <option
-                key={id}
-                value={option.toLowerCase()}
-                disabled={id === 0}
-                data-testid="option"
-              >
-                {option}
-              </option>
-            ))}
-          </select>
-          <p className={classes.warning}>{this.props.errMessage}</p>
-        </div>
-      </label>
-    );
-  }
-}
+const Select: React.FC<SelectProps> = ({ label, name, options, register, errMessage }) => {
+  return (
+    <label className={classes.label}>
+      {label}:
+      <div className={classes.container}>
+        <select
+          {...register(name, {
+            validate: {
+              choose: (v) => v !== 'choose it' || 'field is required',
+            },
+          })}
+          className={classes.input}
+          defaultValue={options[0].toLowerCase()}
+        >
+          {options.map((option, id) => (
+            <option key={id} value={option.toLowerCase()} disabled={id === 0} data-testid="option">
+              {option}
+            </option>
+          ))}
+        </select>
+        <p className={classes.warning}>{errMessage}</p>
+      </div>
+    </label>
+  );
+};
 
 export default Select;

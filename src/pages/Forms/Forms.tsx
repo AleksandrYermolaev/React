@@ -1,59 +1,35 @@
 import Form from 'components/Form/Form';
 import FormCard from 'components/FormCard/FormCard';
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { UserType } from 'types/types';
 import classes from './Forms.module.scss';
 
-type FormProps = object;
-type FormState = {
-  cards: Array<UserType>;
-  isUpdate: boolean;
-};
+const Forms: React.FC = () => {
+  const [cards, setCards] = useState<UserType[]>([]);
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
 
-class Forms extends React.Component<FormProps, FormState> {
-  modalTimer: NodeJS.Timeout | null;
+  console.log('get new instance!');
+  const getData = (cardData: UserType): void => setCards([...cards, cardData]);
 
-  constructor(props: FormProps) {
-    super(props);
-    this.state = {
-      cards: [],
-      isUpdate: false,
+  useEffect(() => {
+    if (!cards.length) return;
+    setIsUpdate(true);
+    const timer = setTimeout(() => setIsUpdate(false), 1500);
+
+    return () => {
+      if (timer) clearTimeout(timer);
     };
-    this.modalTimer = null;
-  }
+  }, [cards]);
 
-  getData = (cardData: UserType) => {
-    this.setState((state) => {
-      return {
-        cards: [...state.cards, cardData],
-      };
-    });
-  };
-
-  componentDidUpdate(prevProps: FormProps, prevState: FormState): void {
-    if (prevState.cards.length !== this.state.cards.length) {
-      this.setState({ isUpdate: true });
-      this.modalTimer = setTimeout(() => this.setState({ isUpdate: false }), 1500);
-    }
-  }
-
-  componentWillUnmount(): void {
-    if (this.modalTimer) clearTimeout(this.modalTimer);
-  }
-
-  render(): React.ReactNode {
-    return (
-      <section className={classes.wrapper}>
-        <Form setData={this.getData} />
-        {this.state.cards.map((card, id) => (
-          <FormCard key={`${card.surname}-${id}`} user={card} />
-        ))}
-        <div className={this.state.isUpdate ? classes.modal : classes.modal_hide}>
-          Card has been created!
-        </div>
-      </section>
-    );
-  }
-}
+  return (
+    <section className={classes.wrapper}>
+      <Form setData={getData} />
+      {cards.map((card, id) => (
+        <FormCard key={`${card.surname}-${id}`} user={card} />
+      ))}
+      <div className={isUpdate ? classes.modal : classes.modal_hide}>Card has been created!</div>
+    </section>
+  );
+};
 
 export default Forms;

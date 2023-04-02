@@ -4,13 +4,13 @@ import Text from './Text';
 
 describe('Text', () => {
   const textProps = {
-    label: 'text',
+    label: 'Name' as 'Name' | 'Surname',
     errMessage: 'error',
-    getValue: vi.fn(),
+    register: vi.fn(),
   };
 
   it('should render input', () => {
     const { getByLabelText } = render(<Text {...textProps} />);
-    expect(getByLabelText(/text/i)).toBeInTheDocument();
+    expect(getByLabelText(/name/i)).toBeInTheDocument();
   });
 });

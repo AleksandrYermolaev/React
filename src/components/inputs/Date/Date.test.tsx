@@ -6,7 +6,7 @@ describe('Date', () => {
   const dateProps = {
     label: 'date',
     errMessage: 'error',
-    getValue: vi.fn(),
+    register: vi.fn(),
   };
 
   it('should render input', () => {

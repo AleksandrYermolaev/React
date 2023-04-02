@@ -9,7 +9,7 @@ describe('Check', () => {
     label: 'radio',
     options: stubOptions,
     errMessage: 'error',
-    getValue: vi.fn(),
+    register: vi.fn(),
   };
 
   it('should render correct amount of radios', () => {

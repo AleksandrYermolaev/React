@@ -1,46 +1,36 @@
-import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { InputsType } from 'types/types';
 import classes from './Text.module.scss';
 
-type TextState = object;
-
 type TextProps = {
-  label: string;
+  register: UseFormRegister<InputsType>;
+  label: 'Name' | 'Surname';
   errMessage: string;
-  getValue: (field: string, value: string | undefined) => void;
 };
 
-export class Text extends React.Component<TextProps, TextState> {
-  textInput: React.RefObject<HTMLInputElement>;
-
-  constructor(props: TextProps) {
-    super(props);
-    this.textInput = React.createRef<HTMLInputElement>();
-  }
-
-  handleTextInput = () => {
-    this.props.getValue(this.props.label.toLowerCase(), this.textInput.current?.value);
-  };
-
-  render() {
-    return (
-      <>
-        <label className={classes.label}>
-          {this.props.label}:
-          <div className={classes.container}>
-            <input
-              type="text"
-              name={this.props.label.toLowerCase()}
-              className={classes.input}
-              ref={this.textInput}
-              onChange={this.handleTextInput}
-              onBlur={this.handleTextInput}
-            />
-            <p className={classes.warning}>{this.props.errMessage}</p>
-          </div>
-        </label>
-      </>
-    );
-  }
-}
+const Text: React.FC<TextProps> = ({ register, label, errMessage }) => {
+  const inputName = label.toLowerCase() as 'name' | 'surname';
+  return (
+    <>
+      <label className={classes.label}>
+        {label}:
+        <div className={classes.container}>
+          <input
+            type="text"
+            {...register(inputName, {
+              required: 'field is required',
+              minLength: {
+                value: 2,
+                message: 'min 2 letters',
+              },
+            })}
+            className={classes.input}
+          />
+          <p className={classes.warning}>{errMessage}</p>
+        </div>
+      </label>
+    </>
+  );
+};
 
 export default Text;

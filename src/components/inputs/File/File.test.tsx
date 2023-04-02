@@ -1,13 +1,14 @@
 import { render } from '@testing-library/react';
+import { InputsType } from 'types/types';
 import { describe, expect, vi } from 'vitest';
 import File from './File';
 
 describe('File', () => {
   const fileProps = {
     label: 'file',
-    name: 'file',
+    name: 'avatar' as keyof InputsType,
     accept: 'image/*',
-    getValue: vi.fn(),
+    register: vi.fn(),
     errMessage: 'error',
   };
 
