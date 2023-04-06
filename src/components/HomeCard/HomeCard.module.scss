@@ -1,6 +1,7 @@
 @import '../../styles/variables';
 
 .article {
+  position: relative;
   max-width: 300px;
   border: 1px solid $border-color;
   border-radius: 10px;
