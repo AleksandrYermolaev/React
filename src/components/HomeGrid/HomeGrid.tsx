@@ -12,6 +12,7 @@ const HomeGrid: React.FC<HomeGridProps> = ({ data, isLoaded }) => (
     {data.length ? (
       data.map((character) => (
         <HomeCard
+          id={character.id}
           key={character.id}
           image={character.image}
           name={character.name}

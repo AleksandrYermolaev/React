@@ -1,30 +1,34 @@
+import { useState } from 'react';
 import HomeCardSkeleton from 'components/Skeletons/HomeCardSkeleton';
 import classes from './HomeCard.module.scss';
-import { useState } from 'react';
-import ImageSkeleton from 'components/Skeletons/ImageSkeleton';
+import Modal from 'components/Modal/Modal';
+import CharacterInfo from 'components/CharacterInfo/CharacterInfo';
+import Image from 'components/Image/Image';
 
 type HomeCardProps = {
   image: string;
   name: string;
   isLoaded: boolean;
+  id: number;
 };
 
-const HomeCard: React.FC<HomeCardProps> = ({ image, name, isLoaded }) => {
-  const [imageIsLoad, setImageIsLoad] = useState<boolean>(false);
+const HomeCard: React.FC<HomeCardProps> = ({ image, name, isLoaded, id }) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const handleCloseModal = (event: React.MouseEvent): void => {
+    event.stopPropagation();
+    setIsModalOpen(false);
+  };
 
   return !isLoaded ? (
     <HomeCardSkeleton />
   ) : (
-    <article className={classes.article}>
-      {imageIsLoad ? null : <ImageSkeleton />}
-      <img
-        src={image}
-        alt={`Avatar of ${name}`}
-        height={300}
-        width={300}
-        onLoad={() => setImageIsLoad(true)}
-      />
+    <article className={classes.article} onClick={() => setIsModalOpen(true)}>
+      <Image src={image} name={name} />
       <p className={classes.name}>{name}</p>
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+        <CharacterInfo id={id} />
+      </Modal>
     </article>
   );
 };

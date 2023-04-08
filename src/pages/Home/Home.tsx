@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { CharacterResponse, CharacterType } from 'types/types';
+import { CharacterType } from 'types/types';
 import Search from 'components/inputs/Search/Search';
 import Button from 'components/Button/Button';
 import HomeGrid from 'components/HomeGrid/HomeGrid';
 import classes from './Home.module.scss';
 import getInitialState from 'helpers/getHomeInitialState';
 import Pagination from 'components/Pagination/Pagination';
-import getUrlSearchParams from 'helpers/getUrlSearchParams';
-
-const BASE_URL = 'https://rickandmortyapi.com/api';
-const CHARACTER_ENDPOINT = '/character';
+import characterService from 'services/characterService';
 
 const Home: React.FC = () => {
   const [searchValue, setSearchValue] = useState(getInitialState());
@@ -26,38 +23,34 @@ const Home: React.FC = () => {
     setSearchValue(event.target.value);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    setIsLoaded(false);
     event.preventDefault();
     localStorage.setItem('search', searchValue);
+    setCurrentPage(1);
     if (searchValue) {
       setSearchParam({ search: searchValue });
-      setCurrentPage(1);
     } else {
       setSearchParam({});
     }
   };
 
   const nextPage = () => {
-    setIsLoaded(false);
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
   const prevPage = () => {
-    setIsLoaded(false);
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
   useEffect(() => {
     const abortController = new AbortController();
+    setIsLoaded(false);
     (async () => {
       try {
-        const response = await fetch(
-          `${BASE_URL}${CHARACTER_ENDPOINT}${getUrlSearchParams(searchQuery, currentPage)}`,
-          {
-            signal: abortController.signal,
-          }
+        const [info, results] = await characterService.getAll(
+          searchQuery,
+          currentPage,
+          abortController.signal
         );
-        const { info, results }: CharacterResponse = await response.json();
         if (results) {
           setApiData(results);
           setIsLastPage(!info.next);
