@@ -14,7 +14,7 @@ const FormCard: React.FC<{ user: UserType }> = ({
     <article className={classes.article}>
       <div className={classes.top}>
         <div className={classes.img_container}>
-          <Image src={avatar} />
+          <Image src={avatar} name={name} />
         </div>
         <div className={classes.info_container}>
           <h4 className={classes.name}>{`${name} ${surname}`}</h4>

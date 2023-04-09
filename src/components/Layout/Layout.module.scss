@@ -16,6 +16,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px solid $border-color;
   }
 
   .main {
@@ -27,6 +28,9 @@
   .footer {
     gap: 2rem;
     color: $text-color-secondary;
+    background-color: $footer-color;
+    border-top: 1px solid $border-color;
+    border-bottom: none;
 
     a,
     p {

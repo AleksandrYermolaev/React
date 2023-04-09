@@ -1,18 +1,30 @@
+@import '../../styles/variables';
+
 .wrapper {
   width: 100%;
   display: grid;
   gap: 1rem;
   grid-auto-rows: 1fr;
+  justify-items: center;
 
-  @media (min-width: 800px) {
+  @media (min-width: 700px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1000px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media (min-width: 1600px) {
+  @media (min-width: 1400px) {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .not_found {
+    font-family: 'Orbitron';
+    font-size: 1.5rem;
+    margin-top: 3rem;
+    color: $button-primary;
+    grid-column: 1 / span 4;
+    text-align: center;
   }
 }

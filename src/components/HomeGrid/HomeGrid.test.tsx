@@ -1,40 +1,15 @@
 import { render } from '@testing-library/react';
 import { describe, it } from 'vitest';
 import HomeGrid from './HomeGrid';
+import { allCharacterStub } from 'mocks/mockData';
 
 describe('HomeGrid', () => {
-  const cardsStub = [
-    {
-      image: 'img-url',
-      title: 'Card title',
-      subtitle: 'Card sybtitle',
-      categories: 'category1, category2',
-      likes: 5,
-      views: 10,
-      date: 1,
-    },
-    {
-      image: 'img-url',
-      title: 'Card title',
-      subtitle: 'Card sybtitle',
-      categories: 'category1, category2',
-      likes: 5,
-      views: 10,
-      date: 2,
-    },
-    {
-      image: 'img-url',
-      title: 'Card title',
-      subtitle: 'Card sybtitle',
-      categories: 'category1, category2',
-      likes: 5,
-      views: 10,
-      date: 3,
-    },
-  ];
-
+  it('should render message, when data is not found', () => {
+    const { getByText } = render(<HomeGrid data={[]} isLoaded={true} />);
+    expect(getByText(/does not exist/i)).toBeInTheDocument();
+  });
   it('should render correct amount of cards', () => {
-    const { getAllByRole } = render(<HomeGrid data={cardsStub} />);
-    expect(getAllByRole('article').length).toBe(cardsStub.length);
+    const { getAllByRole } = render(<HomeGrid data={allCharacterStub.results} isLoaded={true} />);
+    expect(getAllByRole('article').length).toBe(allCharacterStub.results.length);
   });
 });
