@@ -1,8 +1,8 @@
 import getUrlSearchParams from 'helpers/getUrlSearchParams';
 import { CharacterResponse, CharacterType, InfoType } from 'types/types';
 
-const BASE_URL = 'https://rickandmortyapi.com/api';
-const CHARACTER_ENDPOINT = '/character';
+export const BASE_URL = 'https://rickandmortyapi.com/api';
+export const CHARACTER_ENDPOINT = '/character';
 
 class CharacterService {
   async getAll(

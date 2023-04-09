@@ -15,6 +15,10 @@ type HomeCardProps = {
 const HomeCard: React.FC<HomeCardProps> = ({ image, name, isLoaded, id }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  const handleOpenModal = (): void => {
+    setIsModalOpen(true);
+  };
+
   const handleCloseModal = (event: React.MouseEvent): void => {
     event.stopPropagation();
     setIsModalOpen(false);
@@ -23,7 +27,7 @@ const HomeCard: React.FC<HomeCardProps> = ({ image, name, isLoaded, id }) => {
   return !isLoaded ? (
     <HomeCardSkeleton />
   ) : (
-    <article className={classes.article} onClick={() => setIsModalOpen(true)}>
+    <article className={classes.article} onClick={handleOpenModal}>
       <Image src={image} name={name} />
       <p className={classes.name}>{name}</p>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
