@@ -1,5 +1,6 @@
 import Button from 'components/Button/Button';
 import classes from './Pagination.module.scss';
+import React from 'react';
 
 type PaginationProps = {
   next: () => void;
@@ -22,4 +23,4 @@ const Pagination: React.FC<PaginationProps> = ({ next, prev, page, isLastPage })
   );
 };
 
-export default Pagination;
+export default React.memo(Pagination);

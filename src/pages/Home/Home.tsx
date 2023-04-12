@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CharacterType } from 'types/types';
 import Search from 'components/inputs/Search/Search';
@@ -8,19 +8,23 @@ import classes from './Home.module.scss';
 import getInitialState from 'helpers/getHomeInitialState';
 import Pagination from 'components/Pagination/Pagination';
 import characterService from 'services/characterService';
+import { useAppDispatch, useAppSelector } from 'hooks/stateHooks';
+import { selectSearch, setSearchQuery } from 'store/searchQuerySlice';
 
 const Home: React.FC = () => {
-  const [searchValue, setSearchValue] = useState(getInitialState());
   const [searchParam, setSearchParam] = useSearchParams();
   const [apiData, setApiData] = useState<Array<CharacterType>>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const searchValue = useAppSelector(selectSearch);
+  const dispatch = useAppDispatch();
 
   const searchQuery = searchParam.get('name');
 
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>): void =>
-    setSearchValue(event.target.value);
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    dispatch(setSearchQuery(event.target.value));
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,13 +37,13 @@ const Home: React.FC = () => {
     }
   };
 
-  const nextPage = () => {
+  const nextPage = useCallback(() => {
     setCurrentPage((prevPage) => prevPage + 1);
-  };
+  }, []);
 
-  const prevPage = () => {
+  const prevPage = useCallback(() => {
     setCurrentPage((prevPage) => prevPage - 1);
-  };
+  }, []);
 
   useEffect(() => {
     const abortController = new AbortController();
