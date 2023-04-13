@@ -1,29 +1,26 @@
 import Form from 'components/Form/Form';
 import FormCard from 'components/FormCard/FormCard';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { UserType } from 'types/types';
 import classes from './Forms.module.scss';
+import { useAppDispatch, useAppSelector } from 'hooks/stateHooks';
+import { selectCards, addCard } from 'store/formCardsSlice';
 
 const Forms: React.FC = () => {
-  const [cards, setCards] = useState<UserType[]>([]);
+  const cards = useAppSelector(selectCards);
+  const dispatch = useAppDispatch();
+
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
 
-  console.log('get new instance!');
-  const getData = (cardData: UserType): void => setCards([...cards, cardData]);
-
-  useEffect(() => {
-    if (!cards.length) return;
+  const setCard = (cardData: UserType): void => {
+    dispatch(addCard(cardData));
     setIsUpdate(true);
-    const timer = setTimeout(() => setIsUpdate(false), 1500);
-
-    return () => {
-      if (timer) clearTimeout(timer);
-    };
-  }, [cards]);
+    setTimeout(() => setIsUpdate(false), 1500);
+  };
 
   return (
     <section className={classes.wrapper}>
-      <Form setData={getData} />
+      <Form setData={setCard} />
       {cards.map((card, id) => (
         <FormCard key={`${card.surname}-${id}`} user={card} />
       ))}

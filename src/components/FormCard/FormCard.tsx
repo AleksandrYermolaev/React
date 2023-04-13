@@ -1,6 +1,5 @@
-import Image from 'components/Image/Image';
-import { UserType } from 'types/types';
 import classes from './FormCard.module.scss';
+import { UserType } from 'types/types';
 
 const FormCard: React.FC<{ user: UserType }> = ({
   user: { name, surname, birthday, family, gender, avatar, notifications },
@@ -14,7 +13,14 @@ const FormCard: React.FC<{ user: UserType }> = ({
     <article className={classes.article}>
       <div className={classes.top}>
         <div className={classes.img_container}>
-          <Image src={avatar} name={name} />
+          <img
+            src={avatar}
+            alt={`Avatar of ${name}`}
+            style={{
+              maxHeight: '200px',
+              maxWidth: '180px',
+            }}
+          />
         </div>
         <div className={classes.info_container}>
           <h4 className={classes.name}>{`${name} ${surname}`}</h4>

@@ -1,40 +1,32 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { CharacterType } from 'types/types';
+import classes from './Home.module.scss';
 import Search from 'components/inputs/Search/Search';
 import Button from 'components/Button/Button';
 import HomeGrid from 'components/HomeGrid/HomeGrid';
-import classes from './Home.module.scss';
-import getInitialState from 'helpers/getHomeInitialState';
 import Pagination from 'components/Pagination/Pagination';
 import characterService from 'services/characterService';
 import { useAppDispatch, useAppSelector } from 'hooks/stateHooks';
 import { selectSearch, setSearchQuery } from 'store/searchQuerySlice';
+import { setCharacters, selectCharacters } from 'store/searchResultsSlice';
 
 const Home: React.FC = () => {
-  const [searchParam, setSearchParam] = useSearchParams();
-  const [apiData, setApiData] = useState<Array<CharacterType>>([]);
+  const searchValue = useAppSelector(selectSearch);
+  const searchResults = useAppSelector(selectCharacters);
+  const dispatch = useAppDispatch();
+
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const searchValue = useAppSelector(selectSearch);
-  const dispatch = useAppDispatch();
-
-  const searchQuery = searchParam.get('name');
+  const [inputValue, setInputValue] = useState<string>(searchValue);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    dispatch(setSearchQuery(event.target.value));
+    setInputValue(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.setItem('search', searchValue);
     setCurrentPage(1);
-    if (searchValue) {
-      setSearchParam({ search: searchValue });
-    } else {
-      setSearchParam({});
-    }
+    dispatch(setSearchQuery(inputValue));
   };
 
   const nextPage = useCallback(() => {
@@ -51,15 +43,15 @@ const Home: React.FC = () => {
     (async () => {
       try {
         const [info, results] = await characterService.getAll(
-          searchQuery,
+          searchValue,
           currentPage,
           abortController.signal
         );
         if (results) {
-          setApiData(results);
+          dispatch(setCharacters(results));
           setIsLastPage(!info.next);
         } else {
-          setApiData([]);
+          dispatch(setCharacters([]));
         }
       } catch (error) {
         console.log(error);
@@ -71,20 +63,16 @@ const Home: React.FC = () => {
     return () => {
       abortController.abort();
     };
-  }, [searchQuery, currentPage]);
-
-  useEffect(() => {
-    getInitialState() && setSearchParam({ name: getInitialState() });
-  }, [setSearchParam]);
+  }, [searchValue, currentPage, dispatch]);
 
   return (
     <div className={classes.wrapper}>
       <form className={classes.form} onSubmit={handleSubmit}>
-        <Search value={searchValue} setValue={handleInput} placeholder="search..." />
+        <Search value={inputValue} setValue={handleInput} placeholder="search..." />
         <Button type="submit">Search</Button>
       </form>
-      <HomeGrid data={apiData} isLoaded={isLoaded} />
-      {apiData.length ? (
+      <HomeGrid data={searchResults} isLoaded={isLoaded} />
+      {searchResults.length ? (
         <Pagination next={nextPage} prev={prevPage} page={currentPage} isLastPage={isLastPage} />
       ) : null}
     </div>
