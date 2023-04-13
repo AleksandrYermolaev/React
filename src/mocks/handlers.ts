@@ -1,6 +1,8 @@
 import { rest } from 'msw';
-import { BASE_URL, CHARACTER_ENDPOINT } from 'services/characterService';
 import { allCharacterStub, characterStub } from './mockData';
+
+const BASE_URL = 'https://rickandmortyapi.com/api';
+const CHARACTER_ENDPOINT = '/character';
 
 export const handlers = [
   rest.get(`${BASE_URL}${CHARACTER_ENDPOINT}`, (req, res, ctx) => {
