@@ -2,6 +2,8 @@ import { render } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import Forms from './Forms';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import { store } from 'store';
 
 describe('Forms Page', () => {
   const file = new File(['foo'], 'foo.jpg', {
@@ -18,7 +20,11 @@ describe('Forms Page', () => {
 
   it('should render card on user input', async () => {
     const user = userEvent.setup();
-    const { getByLabelText, getAllByRole, queryByRole, getByRole } = render(<Forms />);
+    const { getByLabelText, getAllByRole, queryByRole, getByRole } = render(
+      <Provider store={store}>
+        <Forms />
+      </Provider>
+    );
     expect(queryByRole('article')).not.toBeInTheDocument();
     await user.type(getByLabelText('Name:'), 'John');
     await user.type(getByLabelText(/surname/i), 'Doe');
