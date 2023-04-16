@@ -1,15 +1,14 @@
-import { CharacterType } from 'types/types';
+import { useMemo } from 'react';
 import classes from './CharacterInfo.module.scss';
-import { useEffect, useState } from 'react';
-import characterService from 'services/characterService';
 import Image from 'components/Image/Image';
 import CharacterInfoSkeleton from 'components/Skeletons/CharacterInfoSkeleton';
+import { useGetCharacterQuery } from 'services/apiService';
 
 interface CharacterInfoProps {
   id: number;
 }
 
-const initialCharacterState = {
+const voidCharacter = {
   id: 0,
   name: '',
   status: '',
@@ -31,26 +30,18 @@ const initialCharacterState = {
 };
 
 const CharacterInfo: React.FC<CharacterInfoProps> = ({ id }) => {
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [character, setCharacter] = useState<CharacterType>(initialCharacterState);
+  const { data, isFetching, isSuccess } = useGetCharacterQuery(id);
 
-  useEffect(() => {
-    setIsLoaded(false);
-    (async () => {
-      try {
-        const character = await characterService.getCharacterById(id);
-        setCharacter(character);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoaded(true);
-      }
-    })();
-  }, [id]);
+  const character = useMemo(() => {
+    if (isSuccess) {
+      return data;
+    }
+    return voidCharacter;
+  }, [isSuccess, data]);
 
   const { name, status, species, gender, origin, image, episode, location } = character;
 
-  return !isLoaded ? (
+  return isFetching ? (
     <CharacterInfoSkeleton />
   ) : (
     <>

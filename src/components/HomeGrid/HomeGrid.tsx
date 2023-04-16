@@ -1,3 +1,4 @@
+import React from 'react';
 import { CharacterType } from '../../types/types';
 import HomeCard from '../HomeCard/HomeCard';
 import classes from './HomeGrid.module.scss';
@@ -25,4 +26,4 @@ const HomeGrid: React.FC<HomeGridProps> = ({ data, isLoaded }) => (
   </section>
 );
 
-export default HomeGrid;
+export default React.memo(HomeGrid);

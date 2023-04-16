@@ -1,86 +1,73 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { CharacterType } from 'types/types';
+import { useCallback, useMemo, useState } from 'react';
+import classes from './Home.module.scss';
 import Search from 'components/inputs/Search/Search';
 import Button from 'components/Button/Button';
 import HomeGrid from 'components/HomeGrid/HomeGrid';
-import classes from './Home.module.scss';
-import getInitialState from 'helpers/getHomeInitialState';
 import Pagination from 'components/Pagination/Pagination';
-import characterService from 'services/characterService';
+import { useAppDispatch, useAppSelector } from 'hooks/stateHooks';
+import { selectSearch, setSearchQuery } from 'store/searchQuerySlice';
+import { useGetCharactersQuery } from 'services/apiService';
+import { CharacterType, InfoType } from 'types/types';
 
 const Home: React.FC = () => {
-  const [searchValue, setSearchValue] = useState(getInitialState());
-  const [searchParam, setSearchParam] = useSearchParams();
-  const [apiData, setApiData] = useState<Array<CharacterType>>([]);
+  const searchValue = useAppSelector(selectSearch);
+  const dispatch = useAppDispatch();
+
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isLastPage, setIsLastPage] = useState<boolean>(false);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>(searchValue);
 
-  const searchQuery = searchParam.get('name');
+  const { data, isFetching, isSuccess } = useGetCharactersQuery({
+    search: searchValue,
+    page: currentPage,
+  });
 
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>): void =>
-    setSearchValue(event.target.value);
+  const info: InfoType = useMemo(() => {
+    if (isSuccess) {
+      return data.info;
+    }
+    return {
+      count: 0,
+      pages: 0,
+      next: null,
+      prev: null,
+    };
+  }, [isSuccess, data?.info]);
+
+  const characters: Array<CharacterType> = useMemo(() => {
+    if (isSuccess) {
+      return data.results;
+    }
+    return [];
+  }, [isSuccess, data?.results]);
+
+  const isLastPage = !info.next;
+
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setInputValue(event.target.value);
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    localStorage.setItem('search', searchValue);
     setCurrentPage(1);
-    if (searchValue) {
-      setSearchParam({ search: searchValue });
-    } else {
-      setSearchParam({});
-    }
+    dispatch(setSearchQuery(inputValue));
   };
 
-  const nextPage = () => {
+  const nextPage = useCallback(() => {
     setCurrentPage((prevPage) => prevPage + 1);
-  };
+  }, []);
 
-  const prevPage = () => {
+  const prevPage = useCallback(() => {
     setCurrentPage((prevPage) => prevPage - 1);
-  };
-
-  useEffect(() => {
-    const abortController = new AbortController();
-    setIsLoaded(false);
-    (async () => {
-      try {
-        const [info, results] = await characterService.getAll(
-          searchQuery,
-          currentPage,
-          abortController.signal
-        );
-        if (results) {
-          setApiData(results);
-          setIsLastPage(!info.next);
-        } else {
-          setApiData([]);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoaded(true);
-      }
-    })();
-
-    return () => {
-      abortController.abort();
-    };
-  }, [searchQuery, currentPage]);
-
-  useEffect(() => {
-    getInitialState() && setSearchParam({ name: getInitialState() });
-  }, [setSearchParam]);
+  }, []);
 
   return (
     <div className={classes.wrapper}>
       <form className={classes.form} onSubmit={handleSubmit}>
-        <Search value={searchValue} setValue={handleInput} placeholder="search..." />
+        <Search value={inputValue} setValue={handleInput} placeholder="search..." />
         <Button type="submit">Search</Button>
       </form>
-      <HomeGrid data={apiData} isLoaded={isLoaded} />
-      {apiData.length ? (
+      <HomeGrid data={characters} isLoaded={!isFetching} />
+      {characters.length ? (
         <Pagination next={nextPage} prev={prevPage} page={currentPage} isLastPage={isLastPage} />
       ) : null}
     </div>
