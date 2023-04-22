@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchQuerySlice from './searchQuerySlice';
 import formCardsSlice from './formCardsSlice';
-import apiSlice from 'services/apiService';
+import apiSlice from '../services/apiService';
 
 export const store = configureStore({
   reducer: {

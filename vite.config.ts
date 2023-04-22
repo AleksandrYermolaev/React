@@ -5,10 +5,26 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { configDefaults } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import sass from 'sass';
+import istanbul from 'vite-plugin-istanbul';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [
+    react(),
+    tsconfigPaths(),
+    istanbul({
+      cypress: true,
+      requireEnv: false,
+    }),
+  ],
+  css: {
+    preprocessorOptions: {
+      sass: {
+        implementation: sass,
+      },
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',

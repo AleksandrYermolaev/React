@@ -1,8 +1,8 @@
-import Layout from 'components/Layout/Layout';
-import About from 'pages/About/About';
-import Forms from 'pages/Forms/Forms';
-import Home from 'pages/Home/Home';
-import NotFound from 'pages/NotFound/NotFound';
+import Layout from './components/Layout/Layout';
+import About from './pages/About/About';
+import Forms from './pages/Forms/Forms';
+import Home from './pages/Home/Home';
+import NotFound from './pages/NotFound/NotFound';
 
 export default [
   {

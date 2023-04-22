@@ -7,7 +7,7 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const portal = document.getElementById('portal') as HTMLElement;
+// const portal = document.getElementById('portal') as HTMLElement;
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return isOpen
@@ -18,7 +18,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
             {children}
           </div>
         </div>,
-        portal
+        document.getElementById('portal') as HTMLElement
       )
     : null;
 };
