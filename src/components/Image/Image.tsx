@@ -11,7 +11,7 @@ const Image: React.FC<ImageProps> = ({ src, name }) => {
 
   return (
     <>
-      {imageIsLoad ? null : <ImageSkeleton />}
+      {/* {imageIsLoad ? null : <ImageSkeleton />} */}
       <img
         src={src}
         alt={`Avatar of ${name}`}

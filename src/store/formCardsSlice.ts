@@ -1,10 +1,23 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as RTKPackage from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'store';
 import { UserType } from 'types/types';
 
-interface formCardsState {
+const isProduction = process.env.NODE_ENV === 'production';
+
+type RTKType = typeof RTKPackage;
+
+interface DefaultRTK extends RTKType {
+  default: unknown;
+}
+
+export interface formCardsState {
   cards: Array<UserType>;
 }
+
+const { createSlice } = isProduction
+  ? ((RTKPackage as DefaultRTK).default as RTKType)
+  : (RTKPackage as RTKType);
 
 const initialState: formCardsState = {
   cards: [],

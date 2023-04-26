@@ -11,7 +11,7 @@ type PaginationProps = {
 
 const Pagination: React.FC<PaginationProps> = ({ next, prev, page, isLastPage }) => {
   return (
-    <section className={classes.wrapper} data-testId="pagination">
+    <section className={classes.wrapper} data-testid="pagination">
       <Button onClick={prev} disabled={page === 1}>
         ← Prev
       </Button>

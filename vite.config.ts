@@ -18,6 +18,10 @@ export default defineConfig({
       requireEnv: false,
     }),
   ],
+  server: {
+    origin: 'http://127.0.0.1:5173',
+    open: true,
+  },
   css: {
     preprocessorOptions: {
       sass: {

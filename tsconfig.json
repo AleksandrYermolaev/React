@@ -19,7 +19,7 @@
     "jsx": "react-jsx",
     "baseUrl": "./src"
   },
-  "include": ["./src/**/*", "server.ts"],
+  "include": ["src", "server.js", "src/ServerHtml.tsx"],
   "exclude": ["vite.config.ts"],
   "ts-node": {
     "esm": true,
