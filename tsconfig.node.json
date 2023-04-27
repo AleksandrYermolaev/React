@@ -12,6 +12,7 @@
     "src/entry-server.tsx",
     "src/vite-env.d.ts",
     "./src/**/*",
-    "src/ServerHtml.tsx"
+    "src/ServerHtml.tsx",
+    "dist/server/entry-server.d.ts"
   ]
 }

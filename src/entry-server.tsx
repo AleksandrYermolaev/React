@@ -33,3 +33,12 @@ export async function render(
     }
   );
 }
+
+export type RenderType = (
+  request: Request,
+  response: Response,
+  script: string,
+  styles: string | null,
+  url?: string,
+  ssrManifest?: string | undefined
+) => Promise<void>;

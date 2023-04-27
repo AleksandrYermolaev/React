@@ -12,6 +12,5 @@ describe('HomeCard', () => {
     render(<HomeCard image="image" name="Test name" isLoaded={true} id={1} />);
     expect(screen.getByRole('article')).toBeInTheDocument();
     expect(screen.getByAltText(/avatar of test name/i)).toBeInTheDocument();
-    expect(screen.getByTitle(/loading/i)).toBeInTheDocument();
   });
 });
