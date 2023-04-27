@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "baseUrl": "./src"
+  },
+  "include": [
+    "vite.config.ts",
+    "src/entry-server.tsx",
+    "src/vite-env.d.ts",
+    "./src/**/*",
+    "src/ServerHtml.tsx",
+    "dist/server/entry-server.d.ts"
+  ]
+}

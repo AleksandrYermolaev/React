@@ -1,0 +1,45 @@
+@import '../../styles/variables';
+
+.button {
+  display: block;
+  width: 6rem;
+  height: 2rem;
+  cursor: pointer;
+  background-color: $button-primary;
+  color: $text-color;
+  transition: $transition-all;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Orbitron';
+  font-weight: 500;
+  font-size: 1rem;
+
+  &:hover:not(:disabled) {
+    animation: pulse 0.7s;
+    transform: scale(1.2);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+
+  &:disabled {
+    cursor: auto;
+    background-color: $button-primary-disabled;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    }
+    70% {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+    }
+    100% {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+  }
+}
